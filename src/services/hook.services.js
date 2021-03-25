@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
 export default function useDataFunnel() {
-  const [user, setUser] = useState()
-  
+  const [agenda, setAgenda] = useState([])
+
   return {
-    user,
-    setUser
+    agenda,
+    setAgenda
   }
 }
