@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import MainScreen from '_views/main'
 
 const StackNavigatorConfig = {
-  initialRouteName: 'Main',
+  initialRouteParams: 'Main',
   header: null,
   headerMode: 'none',
 }

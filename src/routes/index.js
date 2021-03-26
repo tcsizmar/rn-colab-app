@@ -8,7 +8,7 @@ const RootNavigator = createSwitchNavigator(
     AppStack: AppStackNavigator,
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteParams: 'Auth',
   },
 );
 

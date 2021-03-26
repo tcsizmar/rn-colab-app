@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import Splash from '_views/splash'
 
 const AuthNavigatorConfig = {
-  initialRouteName: 'Auth',
+  initialRouteParams: 'Auth',
 }
 
 const RouteConfigs = {
