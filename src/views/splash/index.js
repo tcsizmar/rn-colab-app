@@ -1,17 +1,29 @@
-import React from 'react'
-import { SafeAreaView, ScrollView, StatusBar, Text, useColorScheme } from 'react-native'
+/** Bibliotecas */
+import React, { useEffect } from 'react'
+import { ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native'
+/** Serviços */
 
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark'
+/** Componentes */
+
+/** Outros Imports */
+import Styles from '_views/splash/styles'
+const splash_img = require('_assets/images/calendar-splash.jpg')
+
+const Splash = ({ navigation}) => {
+
+  useEffect(()=> {
+    setTimeout(() => {
+      navigation.navigate('Main')
+    }, 3000)
+  })
 
   return (
-    <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView contentInsetAdjustmentBehavior='automatic'>
-        <Text>ESTA É A TELA SPLASH</Text>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={Styles.container}>
+      <ImageBackground source={splash_img} style={Styles.imageBackground}>
+        <Text style={Styles.welcomeText}>Bem vindo(a) a nossa agenda eletrônica</Text>
+      </ImageBackground>
+    </View>
   )
 }
 
-export default App
+export default Splash

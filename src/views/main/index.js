@@ -1,15 +1,10 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, StatusBar, Text, useColorScheme } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark'
-
   return (
     <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView contentInsetAdjustmentBehavior='automatic'>
         <Text>ESTA É A TELA MAIN</Text>
-      </ScrollView>
     </SafeAreaView>
   )
 }
