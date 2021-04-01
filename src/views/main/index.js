@@ -1,66 +1,47 @@
-import React, { useRef } from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, FlatList, Button } from 'react-native'
+import { AppContext } from '_services'
+import { RenderListItem } from '_templates'
+import Styles from './styles'
 
-const Main = () => {
-  const nome = useRef(null)
-  const endereco = useRef(null)
-  const telefone = useRef(null)
-  const formikInitialValues = {
-    nome: '',
-    endereco: '',
-    telefone: ''
+const Main = ({ navigation }) => {
+  // ESTAMOS CHAMANDO O CONTEXTO PARA ACESSAR UMA VARIAVEL "GLOBAL"
+  const context = useContext(AppContext)
+
+  // VARIAVEIS LOCAIS
+  const [agendaList, setAgendaList] = useState([])
+
+  // FUNÇÃO DE EXECUÇÃO NO MOMENTO DO RENDER
+  useEffect(() => {
+    // COLETA DOS DADOS GLOBAIS PARA O LOCAL
+    setAgendaList(context.agenda)
+
+    return () => {
+      // EXPORTAÇÃO DOS DADOS LOCAIS PRA LISTA GLOBAL SEMPRE QUE SAIR DESTA TELA
+      context.setAgenda(agendaList)
+    }
+  }, [])
+
+  // FUNÇÃO QUE REALIZA A NAVEGAÇÃO PARA TELA DE CRIAÇÃO
+  const handleCreateNewEntry = () => {
+    navigation.navigate('Register')
   }
-  const FormSchema = Yup.object().shape({
-    nome: Yup.string()
-      .required('O Campo Nome é Obrigatório'),
-    endereco: Yup.string()
-      .required('O Campo Endereço é Obrigatório'),
-    telefone: Yup.string()
-      .required('O Campo Telefone é Obrigatório')
-      .min(10, 'DDD e nº de telefone')
 
-  })
+  // COMPONENTE DA LISTA QUE VAI SER RENDERIZADO
+  const renderItem = ({ item }) => {
+    return <RenderListItem item={item} />
+  }
+
   return (
-    <View>
-      <Formik
-        initialValues={formikInitialValues}
-        onSubmit={values =>
-          console.log(values)
-        }
-        validationSchema={FormSchema}
-      >
-        {({ values, handleChange, handleSubmit, errors }) => (
-          <View>
-
-
-            <Text>Nome:</Text>
-            <TextInput
-              ref={nome}
-              value={values.nome}
-              onChangeText={handleChange('nome')} />
-            {errors.nome && <Text>{errors.nome}</Text>}
-            <Text>Endereço:</Text>
-            <TextInput
-              ref={endereco}
-              value={values.endereco}
-              onChangeText={handleChange('endereco')} />
-            {errors.endereco && <Text>{errors.endereco}</Text>}
-            <Text>Telefone:</Text>
-            <TextInput
-              ref={telefone}
-              value={values.telefone}
-              onChangeText={handleChange('telefone')} />
-
-            {errors.telefone && <Text>{errors.telefone}</Text>}
-            <Button title='Salvar' onPress={handleSubmit} />
-          </View>
-        )}
-
-      </Formik>
+    <View style={Styles.container}>
+      <Text style={Styles.welcomeText}>Bem vindo!</Text>
+      <View style={Styles.viewButton}>
+        <Button title='Criar novo registro' style={Styles.registerBtn} onPress={handleCreateNewEntry}></Button>
+      </View>
+      <View style={Styles.viewEntries}>
+        <FlatList data={context.agenda} renderItem={renderItem} keyExtractor={(item) => item.id} />
+      </View>
     </View>
-
   )
 }
 
