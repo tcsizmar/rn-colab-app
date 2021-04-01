@@ -1,14 +1,8 @@
 import { TextInput } from 'react-native'
 
-const InputDeTexto = (mudaTexto, valor) => {
+const InputDeTexto = (ref, value, callback) => {
 
-  return (
-    <TextInput
-      onChangeText={mudaTexto}
-      value={valor}
-    >
-    </TextInput>
-  )
+  return <TextInput ref={ref} value={value} onChangeText={callback} />
 }
 
 export default InputDeTexto
