@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import MainScreen from '_views/main'
+import RegisterScreen from '_views/register'
 
 const StackNavigatorConfig = {
   initialRouteParams: 'Main',
@@ -10,6 +11,9 @@ const StackNavigatorConfig = {
 const RouteConfigs = {
   Main: {
     screen: MainScreen,
+  },
+  Register: {
+    screen: RegisterScreen
   }
 }
 
