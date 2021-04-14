@@ -26,7 +26,6 @@ const Splash = ({ navigation}) => {
 
   // PEGANDO OS DADOS DO APLICATIVO QUE ESTAO SALVOS NO ASYNC STORAGE
   const getData = async () => {
-    await StorageHelper.clearStorage()
     let objetoComArrayAgenda = await StorageHelper.retrieveData(STORAGE_LIST)
     objetoComArrayAgenda = objetoComArrayAgenda ? JSON.parse(objetoComArrayAgenda) : []
 

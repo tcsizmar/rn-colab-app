@@ -13,6 +13,7 @@ const Styles = StyleSheet.create({
   },
   viewEntries: {
     flex: 9,
+    padding: 20
   },
   welcomeText: {
     textAlign: 'center',

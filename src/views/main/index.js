@@ -11,17 +11,6 @@ const Main = ({ navigation }) => {
   // VARIAVEIS LOCAIS
   const [agendaList, setAgendaList] = useState([])
 
-  // FUNÇÃO DE EXECUÇÃO NO MOMENTO DO RENDER
-  useEffect(() => {
-    // COLETA DOS DADOS GLOBAIS PARA O LOCAL
-    setAgendaList(context.agenda)
-
-    return () => {
-      // EXPORTAÇÃO DOS DADOS LOCAIS PRA LISTA GLOBAL SEMPRE QUE SAIR DESTA TELA
-      context.setAgenda(agendaList)
-    }
-  }, [])
-
   // FUNÇÃO QUE REALIZA A NAVEGAÇÃO PARA TELA DE CRIAÇÃO
   const handleCreateNewEntry = () => {
     navigation.navigate('Register')

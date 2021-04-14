@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { AppContext } from '_services'
 import { StorageHelper } from '_utils'
 import { STORAGE_LIST } from '../../../src/config'
+import Styles from './styles'
 
 const Register = ({ navigation }) => {
   const context = useContext(AppContext)
@@ -25,8 +26,8 @@ const Register = ({ navigation }) => {
     telefone: Yup.string().required('O Campo Telefone é Obrigatório').min(10, 'DDD e nº de telefone'),
   })
 
-  const _handleSubmit = (values) => {
-    const cntAgendaLocal = context.agenda
+  const _handleSubmit = async (values) => {
+    let cntAgendaLocal = context.agenda || []
     const item = {
       id: Math.floor(100000 + Math.random() * 900000),
       nome: values.nome,
@@ -35,12 +36,12 @@ const Register = ({ navigation }) => {
     }
     cntAgendaLocal.push(item)
     context.setAgenda(cntAgendaLocal)
-    StorageHelper.storeData(STORAGE_LIST, JSON.stringify({ agendaStorage: cntAgendaLocal }))
+    await StorageHelper.storeData(STORAGE_LIST, JSON.stringify({ agendaStorage: cntAgendaLocal }))
     navigation.navigate('Main')
   }
 
   return (
-    <View>
+    <View style={Styles.container}>
       <Formik initialValues={formikInitialValues} onSubmit={_handleSubmit} validationSchema={FormSchema}>
         {({ values, handleChange, handleSubmit, errors }) => (
           <View>
