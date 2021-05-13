@@ -7,6 +7,16 @@ import { StorageHelper } from '_utils'
 import { STORAGE_LIST } from '../../../src/config'
 import Styles from './styles'
 
+const InputWithLabel = ({ref, value, handleChange, error, labels, keyboardType}) => (
+  <View style={Styles.inputView}>
+    <Text style={Styles.inputLabel}>{labels}:</Text>
+    <View style={Styles.inputContainer}>
+      <TextInput ref={ref} value={value} style={Styles.textInput} keyboardType={keyboardType} onChangeText={handleChange} />
+    </View>
+    {error && <Text style={Styles.textError}>{error}</Text>}
+  </View>
+)
+
 const Register = ({ navigation }) => {
   const context = useContext(AppContext)
 
@@ -45,20 +55,28 @@ const Register = ({ navigation }) => {
       <Formik initialValues={formikInitialValues} onSubmit={_handleSubmit} validationSchema={FormSchema}>
         {({ values, handleChange, handleSubmit, errors }) => (
           <View>
-            <Text>Nome:</Text>
-            <TextInput ref={nome} value={values.nome} onChangeText={handleChange('nome')} />
-            {errors.nome && <Text>{errors.nome}</Text>}
-            <Text>Endereço:</Text>
-            <TextInput ref={endereco} value={values.endereco} onChangeText={handleChange('endereco')} />
-            {errors.endereco && <Text>{errors.endereco}</Text>}
-            <Text>Telefone:</Text>
-            <TextInput
+            <InputWithLabel
+              ref={nome}
+              labels='Nome'
+              error={errors.nome}
+              value={values.nome}
+              handleChange={handleChange('nome')}
+            />
+            <InputWithLabel
+              ref={endereco}
+              labels='Endereço'
+              error={errors.endereco}
+              value={values.endereco}
+              handleChange={handleChange('endereco')}
+            />
+            <InputWithLabel
               ref={telefone}
+              labels='Telefone'
+              error={errors.telefone}
               value={values.telefone}
               keyboardType='phone-pad'
-              onChangeText={handleChange('telefone')}
+              handleChange={handleChange('telefone')}
             />
-            {errors.telefone && <Text>{errors.telefone}</Text>}
             <Button title='Salvar' onPress={handleSubmit} />
           </View>
         )}
