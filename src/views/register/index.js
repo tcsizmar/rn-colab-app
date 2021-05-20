@@ -4,25 +4,28 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { AppContext } from '_services'
 import { StorageHelper } from '_utils'
+import { CustomButton } from '_molecules'
 import { STORAGE_LIST } from '../../../src/config'
 import Styles from './styles'
 
-const InputWithLabel = ({ref, value, handleChange, error, labels, keyboardType}) => (
+const InputWithLabel = ({ touched, handleBlur, value, handleChange, error, labels, keyboardType }) => (
   <View style={Styles.inputView}>
     <Text style={Styles.inputLabel}>{labels}:</Text>
     <View style={Styles.inputContainer}>
-      <TextInput ref={ref} value={value} style={Styles.textInput} keyboardType={keyboardType} onChangeText={handleChange} />
+      <TextInput
+        value={value}
+        style={Styles.textInput}
+        keyboardType={keyboardType}
+        onBlur={handleBlur}
+        onChangeText={handleChange}
+      />
     </View>
-    {error && <Text style={Styles.textError}>{error}</Text>}
+    {error && touched && <Text style={Styles.textError}>{error}</Text>}
   </View>
 )
 
 const Register = ({ navigation }) => {
   const context = useContext(AppContext)
-
-  const nome = useRef(null)
-  const endereco = useRef(null)
-  const telefone = useRef(null)
 
   const formikInitialValues = {
     nome: '',
@@ -37,6 +40,7 @@ const Register = ({ navigation }) => {
   })
 
   const _handleSubmit = async (values) => {
+    console.log(values)
     let cntAgendaLocal = context.agenda || []
     const item = {
       id: Math.floor(100000 + Math.random() * 900000),
@@ -52,32 +56,38 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={Styles.container}>
+      <Text style={Styles.inputLabel}>Adicionar novo contato</Text>
       <Formik initialValues={formikInitialValues} onSubmit={_handleSubmit} validationSchema={FormSchema}>
-        {({ values, handleChange, handleSubmit, errors }) => (
+        {({ values, handleChange, handleSubmit, touched, handleBlur, errors }) => (
           <View>
             <InputWithLabel
-              ref={nome}
               labels='Nome'
               error={errors.nome}
               value={values.nome}
+              touched={touched.nome}
+              handleBlur={handleBlur('nome')}
               handleChange={handleChange('nome')}
             />
             <InputWithLabel
-              ref={endereco}
               labels='Endereço'
               error={errors.endereco}
               value={values.endereco}
+              touched={touched.endereco}
+              handleBlur={handleBlur('endereco')}
               handleChange={handleChange('endereco')}
             />
             <InputWithLabel
-              ref={telefone}
               labels='Telefone'
               error={errors.telefone}
               value={values.telefone}
               keyboardType='phone-pad'
+              touched={touched.telefone}
+              handleBlur={handleBlur('telefone')}
               handleChange={handleChange('telefone')}
             />
-            <Button title='Salvar' onPress={handleSubmit} />
+            <View style={Styles.buttonContainer}>
+              <CustomButton title='Salvar' iconName='save' onPressAction={handleSubmit} />
+            </View>
           </View>
         )}
       </Formik>

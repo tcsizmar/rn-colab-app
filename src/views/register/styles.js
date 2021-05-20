@@ -30,6 +30,11 @@ const Styles = StyleSheet.create({
     color: Colors.RED,
     fontSize: Typography.FONT_SIZE_14,
   },
+  buttonContainer: {
+    justifyContent:'center',
+    alignItems: 'center',
+    width: '100%'
+  }
 })
 
 export default Styles

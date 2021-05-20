@@ -7,15 +7,25 @@ const Styles = StyleSheet.create({
     borderColor: Colors.BLACK,
     borderRadius: 30,
     backgroundColor: Colors.WHITE,
-    height: 90,
-    padding: 10,
+    height: 100,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
+    flexDirection: 'row'
+  },
+  textContainer: {
+    flex: 4
+  },
+  buttonsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   textName: {
-    fontSize: Typography.FONT_SIZE_24
+    fontSize: Typography.FONT_SIZE_22
   },
   textSmall: {
-    fontSize: Typography.FONT_SIZE_20
+    fontSize: Typography.FONT_SIZE_18
   }
 })
 
